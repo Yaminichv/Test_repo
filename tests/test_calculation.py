@@ -8,6 +8,11 @@ import pytest
 from calculator.calculation import Calculation
 from calculator.operations import add, subtract, multiply, divide
 
+
+def test_calculations(a, b, operation, expected):
+    """Test various calculations"""
+    calc = Calculation(a, b, operation)
+    assert calc.perform() == expected
 def test_addition():
     """Test addition operation"""
     calc = Calculation(Decimal('7'), Decimal('3'), add)
@@ -44,14 +49,3 @@ def test_create():
     calc = Calculation.create(Decimal('5'), Decimal('2'), add)
     assert calc.a == Decimal('5')
     assert calc.b == Decimal('2')
-
-@pytest.mark.parametrize("num1, num2, operation, expected", [
-    (Decimal('12'), Decimal('3'), add, Decimal('15')),
-    (Decimal('9'), Decimal('4'), subtract, Decimal('5')),
-    (Decimal('6'), Decimal('7'), multiply, Decimal('42')),
-    (Decimal('18'), Decimal('2'), divide, Decimal('9')),
-])
-def test_calculations(num1, num2, operation, expected):
-    """Test various calculations"""
-    calc = Calculation(num1, num2, operation)
-    assert calc.perform() == expected
